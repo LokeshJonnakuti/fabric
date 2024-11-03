@@ -271,7 +271,7 @@ class Standalone:
                 "Authorization": f"Bearer {self.client.api_key}"
             }
             response = requests.get(
-                "https://api.openai.com/v1/models", headers=headers)
+                "https://api.openai.com/v1/models", headers=headers, timeout=60)
 
             if response.status_code == 200:
                 models = response.json().get("data", [])
@@ -350,7 +350,7 @@ class Update:
 
     def download_zip(self, url, save_path):
         """Download the zip file from the specified URL."""
-        response = requests.get(url)
+        response = requests.get(url, timeout=60)
         response.raise_for_status()  # Check if the download was successful
         with open(save_path, 'wb') as f:
             f.write(response.content)
@@ -441,7 +441,7 @@ class Setup:
         }
 
         response = requests.get(
-            "https://api.openai.com/v1/models", headers=headers)
+            "https://api.openai.com/v1/models", headers=headers, timeout=60)
 
         if response.status_code == 200:
             models = response.json().get("data", [])
